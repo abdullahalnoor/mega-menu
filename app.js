@@ -53,7 +53,7 @@ magaMenue.forEach(function(item){
             console.log('ok')
             item.style.marginTop = -(parseFloat(currentItemUlHeightHalf) -parseFloat(parentLiHeightHalf))+'px';
         }else{     
-            item.style.marginBottom =   - parseFloat(parentLiTop) +'px';
+            item.style.marginTop =   - parseFloat(parentLiTop) +'px';
         }
     }
     

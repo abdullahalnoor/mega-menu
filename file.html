@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        /* Global style */
+body {
+  padding: 50px;
+}
+
+.form-group{
+    width: 300px;
+    position: relative;
+}
+.file-preview{
+    width: 100%;
+    height: 300px;
+    display: none;
+}
+
+.btn-tertiary {
+  color: #555;
+  padding: 0;
+  line-height: 40px;
+  width:100%;
+  margin: auto;
+  display: block;
+  border: 2px solid #555;
+}
+.btn-tertiary:hover, .btn-tertiary:focus {
+  color: #888888;
+  border-color: #888888;
+}
+
+/* input file style */
+.input-file {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.input-file + .js-labelFile {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0 10px;
+  cursor: pointer;
+}
+/* .input-file + .js-labelFile .icon:before {
+  content: "\f093";
+} */
+/* .input-file + .js-labelFile.has-file .icon:before {
+  content: "\f00c";
+  color: #5AAC7B;
+} */
+
+    </style>
+</head>
+<body>
+    
+    <div class="form-group">
+        <img src="" class="file-preview">
+        <img src="./loading.gif" width="50" height="50" style="display: block !important;margin: 50% auto;">
+        <input type="file" name="file" id="file" class="input-file">
+        <label for="file" class="btn btn-tertiary js-labelFile">
+          <i class="icon fa fa-check"></i>
+          <span class="js-fileName">Choose a file</span>
+        </label>
+      </div>
+
+      <script>
+
+
+document.querySelectorAll(".input-file").forEach(function(item){
+    let fileInput = item;
+    let labelFile = item.nextElementSibling;
+    console.log(fileInput)
+    console.log(labelFile.innerHTML)
+    item.addEventListener("change",function(e){
+        let fileName = '';
+        if(e.target.value) fileName = e.target.value.split('\\').pop();
+        fileName ? labelFile.classList.add('has-file') : '';
+        fileName ? labelFile.children[1].textContent = fileName : '';
+        previewFile(e)
+    })
+})
+
+function previewFile(element) {
+ 
+  const preview = element.target.previousElementSibling;
+  preview.style.display = 'block';
+  const file = document.querySelector('input[type=file]').files[0];
+  const reader = new FileReader();
+  reader.addEventListener("load", function () {
+    preview.src = reader.result;
+  }, false);
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+}
+      </script>
+      
+</body>
+</html>
